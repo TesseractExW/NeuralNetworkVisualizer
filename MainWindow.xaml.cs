@@ -1,7 +1,10 @@
-﻿using NVV2.UserControls;
+﻿using Microsoft.Win32;
+using NVV2.UserControls;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NVV2
@@ -18,6 +21,7 @@ namespace NVV2
             int n = 32 * 32;
             float[] input_values = new float[n];
             float[] weights = new float[n * 4];
+            float[] velocities = new float[n * 4];
 
             Visualizer[] arr = [ node_0, node_1, node_2, node_3 ];
             int _i = 0;
@@ -83,6 +87,30 @@ namespace NVV2
                 Debug.WriteLine(string.Join(", ", prediction));
                 predictor.Content = "Prediction : #" + Array.IndexOf(prediction, prediction.Max());
             };
+            open_button.Click += (s, e) =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.DefaultExt = ".wdf";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string[] strings = File.ReadAllText(openFileDialog.FileName).Split(", ");
+                    for (int i = 0; i < strings.Length; i++)
+                    {
+                        weights[i] = float.Parse(strings[i]);
+                    }
+                    node_0.DrawFromArray(weights[0..n], 10);
+                    node_1.DrawFromArray(weights[n..(2 * n)], 10);
+                    node_2.DrawFromArray(weights[(2 * n)..(3 * n)], 10);
+                    node_3.DrawFromArray(weights[(3 * n)..(4 * n)], 10);
+                }
+            };
+            save_button.Click += (s, e) =>
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.DefaultExt = ".wdf";
+                if (saveFileDialog.ShowDialog() == true)
+                    File.WriteAllText(saveFileDialog.FileName, string.Join(", ", weights));
+            };
             optimize_button.Click += (s, e) =>
             {
                 int _n = 0;
@@ -134,7 +162,8 @@ namespace NVV2
                         cost += MathF.Pow(prediction[i] - expectation[i], 2);
                     }
                     weights[w] -= h;
-                    new_weights[w] = weights[w] - 0.1f*(cost - def_cost) / h;
+                    velocities[w] = 0.2f * velocities[w] - 0.1f * (cost - def_cost) / h;
+                    new_weights[w] = weights[w] + velocities[w];
                 }
                 Debug.WriteLine(string.Join(", ", prediction));
                 new_weights.CopyTo(weights, 0);

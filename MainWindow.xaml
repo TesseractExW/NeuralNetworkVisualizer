@@ -16,9 +16,8 @@
         <Grid Row="0" Panel.ZIndex="2">
             <Menu>
                 <MenuItem Header="File" FontSize="16">
-                    <MenuItem Header="Save"></MenuItem>
-                    <MenuItem Header="Save As"></MenuItem>
-                    <MenuItem Header="Exit"></MenuItem>
+                    <MenuItem Header="Open" x:Name="open_button"></MenuItem>
+                    <MenuItem Header="Save" x:Name="save_button"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Debug" FontSize="16" Margin="10 ,0">
                     <MenuItem Header="Output Window"></MenuItem>
