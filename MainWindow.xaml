@@ -45,7 +45,12 @@
                         <UserControls:Visualizer x:Name="inputNode" Margin="0,-10,0,10"></UserControls:Visualizer>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Button x:Name="apply_input" Margin="10 10">Apply Input</Button>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" x:Name="apply_input" Margin="10 10">Apply Input</Button>
+                        <Button Grid.Column="1" x:Name="optimize_button" Margin="10 10">Optimize Weight</Button>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
@@ -75,11 +80,11 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Grid.ColumnSpan="2">
-                            <Label x:Name="predictor" VerticalAlignment="Center" Margin="0,0,-5,0">Prediction : #Null</Label>
+                            <Label x:Name="predictor" VerticalAlignment="Top" Margin="0,2,-5,0">Prediction : #Null</Label>
                         </Grid>
                         <Grid Grid.Column="2">
                             <Label VerticalAlignment="Center">Actual Answer : #</Label>
-                            <TextBox BorderBrush="Black" BorderThickness="0.75" VerticalAlignment="Center" Width="50" Margin="10 0 0 0">Null</TextBox>
+                            <TextBox BorderBrush="Black" BorderThickness="0.75" VerticalAlignment="Center" Width="50" Margin="10 0 0 0" x:Name="actual_answer">Null</TextBox>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="2">

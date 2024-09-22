@@ -23,8 +23,8 @@ namespace NVV2.UserControls
         public delegate void ClickHandler(int x, int y);
         public List<ClickHandler> LeftClicked = new List<ClickHandler>();
         public List<ClickHandler> RightClicked = new List<ClickHandler>();
-        public int dimensionX = 16;
-        public int dimensionY = 16;
+        public int dimensionX = 32;
+        public int dimensionY = 32;
         private void MouseMove(object sender, MouseEventArgs e)
         {
             Point p = e.GetPosition(picture);
@@ -59,27 +59,62 @@ namespace NVV2.UserControls
             );
         }
         public WriteableBitmap bitmap;
+        public void ClearScreen()
+        {
+            for (int x = 0; x < dimensionX; x++)
+            {
+                for (int y = 0; y < dimensionY; y++)
+                {
+                    DrawPixel(x, y, 127, 127, 127);
+                }
+            }
+        }
+        public void DrawFromArray(float[] arr)
+        {
+            for (int x = 0; x < dimensionX; x++)
+            {
+                for (int y = 0; y < dimensionY; y++)
+                {
+                    int val = (int)(255 * (arr[y * dimensionX + x] / 2 + 0.5f));
+                    DrawPixel(x, y, val, val, val);
+                }
+            }
+        }
+        public void DrawFromArray(float[] arr,float scale)
+        {
+            for (int x = 0; x < dimensionX; x++)
+            {
+                for (int y = 0; y < dimensionY; y++)
+                {
+                    int val = (int)(255 * (scale*arr[y * dimensionX + x] / 2 + 0.5f));
+                    DrawPixel(x, y, val, val, val);
+                }
+            }
+        }
         public void DrawPixel(int x,int y,int r,int g,int b)
         {
-            try
+            if (x >= 0 && x < dimensionX && y >= 0 && y < dimensionY)
             {
-                bitmap.Lock();
-                unsafe
+                try
                 {
-                    IntPtr pBackBuffer = bitmap.BackBuffer;
-                    pBackBuffer += y * bitmap.BackBufferStride;
-                    pBackBuffer += x * 4;
+                    bitmap.Lock();
+                    unsafe
+                    {
+                        IntPtr pBackBuffer = bitmap.BackBuffer;
+                        pBackBuffer += y * bitmap.BackBufferStride;
+                        pBackBuffer += x * 4;
 
-                    int color_data = r << 16;
-                    color_data |= g << 8;
-                    color_data |= b << 0;
-                    *((int*)pBackBuffer) = color_data;
+                        int color_data = (byte)Math.Min(Math.Abs(r),255) << 16;
+                        color_data |= (byte)Math.Min(Math.Abs(b), 255) << 8;
+                        color_data |= (byte)Math.Min(Math.Abs(g), 255) << 0;
+                        *((int*)pBackBuffer) = color_data;
+                    }
+                    bitmap.AddDirtyRect(new Int32Rect(x, y, 1, 1));
                 }
-                bitmap.AddDirtyRect(new Int32Rect(x, y, 1, 1));
-            }
-            finally
-            {
-                bitmap.Unlock();
+                finally
+                {
+                    bitmap.Unlock();
+                }
             }
         }
         public void Update()
