@@ -69,7 +69,7 @@ namespace NVV2.UserControls
                 }
             }
         }
-        public void DrawFromArray(float[] arr)
+        public void DrawFromArray(float[] arr,float bias)
         {
             for (int x = 0; x < dimensionX; x++)
             {
@@ -80,14 +80,14 @@ namespace NVV2.UserControls
                 }
             }
         }
-        public void DrawFromArray(float[] arr,float scale)
+        public void DrawFromArray(float[] arr,float scale, float bias)
         {
             for (int x = 0; x < dimensionX; x++)
             {
                 for (int y = 0; y < dimensionY; y++)
                 {
                     int val = (int)(255 * (scale*arr[y * dimensionX + x] / 2 + 0.5f));
-                    DrawPixel(x, y, val, val, val);
+                    DrawPixel(x, y, val , val, val);
                 }
             }
         }

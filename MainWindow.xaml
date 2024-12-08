@@ -26,7 +26,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="320"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Rectangle Grid.Column="1" Fill="#fffdf6" Panel.ZIndex="-1"></Rectangle>
@@ -65,11 +65,11 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <Label VerticalAlignment="Center">Learning Rate :</Label>
-                            <TextBox x:Name="learning_rate" BorderBrush="Black" BorderThickness="0.75" VerticalAlignment="Center" Width="50" Margin="70 0 0 0">0.1</TextBox>
+                            <TextBox x:Name="learning_rate" BorderBrush="Black" BorderThickness="0.75" VerticalAlignment="Center" Width="50" Margin="70 0 0 0" TextChanged="learning_rate_TextChanged">0.1</TextBox>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Label VerticalAlignment="Center">Momentum:</Label>
-                            <TextBox x:Name="momentum" BorderBrush="Black" BorderThickness="0.75" VerticalAlignment="Center" Width="50" Margin="70 0 0 0">0.3</TextBox>
+                            <Label VerticalAlignment="Center">Scale :</Label>
+                            <TextBox x:Name="scale" BorderBrush="Black" BorderThickness="0.75" VerticalAlignment="Center" Width="50" Margin="70 0 0 0" TextChanged="scale_TextChanged">10</TextBox>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="1">
@@ -100,19 +100,19 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Width="175">
                     <UserControls:Visualizer x:Name="node_0" Margin="15"></UserControls:Visualizer>
-                    <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #0</Label>
+                    <Label x:Name="TextNode0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #0 bias : 0.00</Label>
                 </Grid>
                 <Grid Grid.Row="1" Width="175">
                     <UserControls:Visualizer x:Name="node_1" Margin="15"></UserControls:Visualizer>
-                    <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #1</Label>
+                    <Label x:Name="TextNode1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #1 bias : 0.00</Label>
                 </Grid>
                 <Grid Grid.Row="2" Width="175">
                     <UserControls:Visualizer x:Name="node_2" Margin="15"></UserControls:Visualizer>
-                    <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #2</Label>
+                    <Label x:Name="TextNode2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #2 bias : 0.00</Label>
                 </Grid>
                 <Grid Grid.Row="3" Width="175">
                     <UserControls:Visualizer x:Name="node_3" Margin="15"></UserControls:Visualizer>
-                    <Label VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #3</Label>
+                    <Label x:Name="TextNode3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 -10">Node #3 bias : 0.00</Label>
                 </Grid>
             </Grid>
         </Grid>
